@@ -8,12 +8,16 @@ const app = express();
 import Run from './connectDB.js';
 import User from './models/User.js';
 
+import cors from 'cors';
+ app.use(cors());
+
 app.use(express.json());
+app.get('/', (req, res) => {
+  res.send(`it's working`);
+});
 app.get('/api/v1/users', async (req, res) => {
   try {
-    const user = await User.findOne({
-      name: req.body.name
-    }).exec();
+    const user = await User.find({}).exec();
     res.status(201).json({user});
   } catch (err) {
     console.error(`Error: ${err.message}`);
